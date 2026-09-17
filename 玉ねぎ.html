@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>玉ねぎ収穫伝説</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;background:linear-gradient(180deg,#bff3ff,#fff3bf);color:#263454;touch-action:manipulation}button{border:0;border-radius:15px;padding:12px 15px;font-weight:900;font-size:15px;box-shadow:0 4px 0 #b7c7d5;background:#fff;color:#263454}button:active{transform:translateY(3px);box-shadow:0 1px 0 #b7c7d5}.hidden{display:none!important}.home{min-height:100vh;display:grid;place-items:center;padding:18px}.homecard{width:min(520px,100%);background:#ffffffdd;border:5px solid #fff;border-radius:30px;padding:24px;text-align:center;box-shadow:0 15px 45px #426a8230}.logo{font-size:82px;filter:drop-shadow(0 8px 0 #d9b34b)}h1{margin:0;font-size:34px;color:#5a3b1b}.sub{font-weight:800;color:#68758b}.rare{margin:15px 0;padding:14px;border-radius:20px;background:linear-gradient(135deg,#ff5aa7,#8057ef);color:#fff;font-weight:900}.start{width:100%;font-size:20px;background:linear-gradient(135deg,#ffd84d,#ff8d28);color:#fff}.continue{width:100%;margin-top:10px;background:#69d7ff;color:#fff}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:15px 0}.features div{background:#fff;border-radius:14px;padding:9px 3px;font-size:12px;font-weight:900}.app{max-width:650px;margin:auto;min-height:100vh;background:#ffffff50}.top{position:sticky;top:0;z-index:10;background:#ffffffea;padding:10px;border-bottom:3px solid #fff;backdrop-filter:blur(8px)}.title{font-size:22px;font-weight:1000}.money{font-size:19px;font-weight:1000;color:#d28b00}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px}.tabs button{padding:9px 2px;font-size:12px}.tabs .on{background:#ffd65a}.page{padding:12px}.panel{background:#ffffffe8;border:3px solid #fff;border-radius:20px;padding:14px;margin-bottom:12px;box-shadow:0 6px 20px #45607018}.area{display:flex;gap:7px;overflow:auto;padding-bottom:8px}.area button{white-space:nowrap}.area .active{background:#7fe0a1}.area .locked{opacity:.6}.farm{position:relative;height:57vh;min-height:390px;border-radius:25px;overflow:hidden;border:5px solid #fff;background:linear-gradient(#8ddf79 0 42%,#8a633e 42%)}.farm:after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;background:repeating-linear-gradient(8deg,#6f4d32 0 18px,#805a3a 19px 32px);opacity:.7}.onion{position:absolute;z-index:2;font-size:54px;width:86px;height:86px;background:#fff9;border:4px solid #fff;border-radius:50%;display:grid;place-items:center;box-shadow:0 7px 15px #0002;animation:pop .2s}.onion small{position:absolute;top:-23px;white-space:nowrap;font-size:12px;color:#8b4cff;font-weight:1000}@keyframes pop{from{transform:scale(.2)}to{transform:scale(1)}}.night{background:linear-gradient(#182b5c 0 42%,#3c3040 42%)}.hint{text-align:center;padding:8px;font-weight:800}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.card{background:#fff;border:3px solid #edf3f7;border-radius:17px;padding:10px}.card button{width:100%;margin-top:7px}.price{color:#d18c00;font-weight:1000}.small{font-size:12px;color:#718096;font-weight:700}.shopitem{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px;border-bottom:2px solid #edf1f4}.workgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.toast{position:fixed;z-index:99;left:50%;bottom:20px;transform:translateX(-50%);background:#263454;color:#fff;padding:12px 17px;border-radius:18px;border:3px solid #fff;font-weight:900}.modal{position:fixed;inset:0;background:#0008;z-index:50;display:grid;place-items:center;padding:20px}.modal>div{background:#fff;border:5px solid #fff;border-radius:25px;padding:22px;text-align:center;max-width:420px;width:100%}.fert{position:fixed;right:10px;bottom:12px;z-index:20;background:#fff;border:3px solid #ffd35a;border-radius:15px;padding:9px;font-size:12px;font-weight:900}.statline{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee}
+</style>
+</head>
+<body>
+<div id="home" class="home"><div class="homecard">
+<div class="logo">🧅</div><h1>玉ねぎ収穫伝説</h1><p class="sub">収穫！集める！合成する！最強の玉ねぎを目指せ！</p>
+<div class="rare">💪🧅 伝説のムキムキマッチョ玉ねぎ<br><span>出現率 0.00025%</span></div>
+<div class="features"><div>🌱 畑</div><div>💼 仕事</div><div>✨ 合成</div><div>🪙 商人</div></div>
+<button class="start" id="start">🚀 ゲームスタート！</button><button class="continue" id="cont">▶️ セーブから続ける</button>
+</div></div>
+<div id="app" class="app hidden">
+<header class="top"><div class="title">🧅 玉ねぎ収穫伝説</div><div class="money">💰 ¥<span id="money">0</span></div>
+<div class="tabs"><button data-p="farm" class="on">🌱畑</button><button data-p="bag">🎒バッグ</button><button data-p="work">💼仕事</button><button data-p="shop">🛒店</button><button data-p="more">✨その他</button></div></header>
+<main>
+<section id="farm" class="page"><div class="area" id="areas"></div><div id="farmfield" class="farm"></div><div class="hint">🧅 玉ねぎをタップして収穫！ 3秒ごとに2個、最大8個。10秒で腐る。</div></section>
+<section id="bag" class="page hidden"><div class="panel"><b>🎒 バッグ</b><div class="small"><span id="bagcount">0</span> / <span id="bagmax">30</span> 個</div><div id="inventory" class="grid"></div></div><div class="panel"><button id="bagup">🎒 バッグ拡張</button><div id="bagprice" class="small"></div></div></section>
+<section id="work" class="page hidden"><div class="panel"><b>💼 仕事</b><div class="small">ゲームを開いている間だけ収入が増えます。</div><div id="works" class="workgrid"></div></div></section>
+<section id="shop" class="page hidden"><div class="panel"><b>🛒 売却</b><div class="small">売値は稼ぎ額の半分。</div><div id="sell"></div></div><div class="panel"><b>✨ 合成</b><div class="small">同じ玉ねぎ4個 → 1個。稼ぎ額×1.25。</div><div id="synth"></div></div></section>
+<section id="more" class="page hidden"><div class="panel"><b>🪙 商人</b><div id="merchant"></div></div><div class="panel"><b>🌱 肥料・🧬突然変異薬</b><div id="token"></div></div><div class="panel"><b>🗺️ エリア</b><div id="areainfo"></div></div><div class="panel"><b>♻️ 転生</b><div id="rebirth"></div></div><div class="panel"><b>📖 図鑑・🏆実績</b><div id="book"></div></div></section>
+</main><div id="fert" class="fert hidden"></div></div>
+<div id="modal" class="modal hidden"><div><div id="modaltext"></div><button id="close">OK！</button></div></div>
+<div id="toast" class="toast hidden"></div>
+<script>
+const normal=[
+["普通の玉ねぎ",.45,5],["小玉ねぎ",.10,7],["大玉ねぎ",.08,10],["白玉ねぎ",.06,13],["しましま玉ねぎ",.05,16],["まんまる玉ねぎ",.04,20],["ひょろ長玉ねぎ",.035,24],["双子玉ねぎ",.03,30],["ちょいデカ玉ねぎ",.025,38],["泥まみれ玉ねぎ",.02,48],["巨大玉ねぎ",.018,60],["ミニミニ玉ねぎ",.015,75],["紫玉ねぎ",.014,90],["黄金色玉ねぎ",.012,110],["ハート玉ねぎ",.01,135],["星形玉ねぎ",.009,165],["ツノ玉ねぎ",.007,200],["透明玉ねぎ",.006,250],["ダイヤ玉ねぎ",.005,320],["虹色玉ねぎ",.004,420],["電気玉ねぎ",.0035,550],["炎玉ねぎ",.003,700],["氷玉ねぎ",.0025,900],["毒玉ねぎ",.002,1150],["UFO玉ねぎ",.0015,1500],["宇宙玉ねぎ",.001,2000],["王様玉ねぎ",.0007,3000],["黄金神玉ねぎ",.0005,5000],["時空玉ねぎ",.0003,12000],["伝説のムキムキマッチョ玉ねぎ",.0000025,100000],["はちみつ玉ねぎ",.00020,150],["キャンディ玉ねぎ",.00015,220],["ぬいぐるみ玉ねぎ",.00010,350],["ぐるぐる玉ねぎ",.00008,500],["プリンセス玉ねぎ",.00006,800],["サファイア玉ねぎ",.00004,1500],["虹炎玉ねぎ",.000025,3000],["雷神玉ねぎ",.000015,6000],["ブラックホール玉ねぎ",.000005,20000],["究極玉ねぎ",.000001,100000]];
+const night=[["月光玉ねぎ",.01,300],["星降り玉ねぎ",.007,500],["夜空玉ねぎ",.005,800],["深夜玉ねぎ",.0035,1200],["流星玉ねぎ",.002,2000],["幽玄玉ねぎ",.001,4000],["新月玉ねぎ",.0005,8000],["銀河玉ねぎ",.0002,15000],["超新星玉ねぎ",.00005,50000],["月夜の神玉ねぎ",.00001,200000]];
+const areaNames={lava:["溶岩玉ねぎ","火山玉ねぎ","灼熱玉ねぎ","火山岩玉ねぎ","マグマ玉ねぎ","炎獄玉ねぎ","隕石玉ねぎ","爆炎玉ねぎ","黒炎玉ねぎ","火口玉ねぎ","紅蓮玉ねぎ","煉獄岩玉ねぎ","業火玉ねぎ","大噴火玉ねぎ","灼熱神玉ねぎ","隕石王玉ねぎ","マグマ神玉ねぎ","炎龍玉ねぎ","黒曜玉ねぎ","地獄火玉ねぎ","超火山玉ねぎ","星落ち玉ねぎ","終焉炎玉ねぎ","火山王玉ねぎ","灼熱の神玉ねぎ"],ocean:["海洋玉ねぎ","貝殻玉ねぎ","サンゴ玉ねぎ","魚玉ねぎ","熱帯魚玉ねぎ","泡玉ねぎ","タコ玉ねぎ","イカ玉ねぎ","クラゲ玉ねぎ","クジラ玉ねぎ","イルカ玉ねぎ","深海玉ねぎ","深淵玉ねぎ","海底宝石玉ねぎ","大海玉ねぎ","真珠玉ねぎ","海神玉ねぎ","海龍玉ねぎ","深海星玉ねぎ","超深海玉ねぎ","蒼海玉ねぎ","大洋王玉ねぎ","巨大深海玉ねぎ","海王玉ねぎ","海洋の神玉ねぎ"],ancient:["古代玉ねぎ","石器玉ねぎ","化石玉ねぎ","土器玉ねぎ","石像玉ねぎ","砂漠玉ねぎ","サソリ玉ねぎ","遺跡玉ねぎ","古文書玉ねぎ","古代金貨玉ねぎ","巨石玉ねぎ","恐竜玉ねぎ","古代恐竜玉ねぎ","王墓玉ねぎ","古代王玉ねぎ","神殿玉ねぎ","神秘玉ねぎ","古代神玉ねぎ","太陽文明玉ねぎ","月文明玉ねぎ","失われた文明玉ねぎ","超古代玉ねぎ","古代皇帝玉ねぎ","古代文明王玉ねぎ","古代の神玉ねぎ"]};
+const areaEarn=[500,700,1000,1400,2000,3000,4500,6000,8000,10000,14000,20000,30000,45000,70000,100000,150000,250000,400000,600000,1000000,2000000,5000000,10000000,50000000];
+const areaProb=[.003,.002,.0015,.0012,.001,.0008,.0006,.0005,.0004,.0003,.00025,.0002,.00015,.0001,.00007,.00005,.00003,.00002,.000015,.00001,.000007,.000004,.000002,.000001,.0000003];
+const ferts=[["普通の肥料",10,60,2],["いい肥料",30,120,3],["スーパー肥料",80,180,4],["ウルトラ肥料",150,240,5],["伝説の肥料",500,300,6]];
+let S={money:0,bag:[],bagmax:30,slots:2,day:1,rebirth:0,tokens:0,unlocked:{normal:true,lava:false,ocean:false,ancient:false},active:"normal",fert:null,mutationUntil:0,merchantClaimed:false,stats:{harvest:0,synth:0}};
+let field=[], lastSpawn=0, lastTick=Date.now(), phase=0;
+const $=id=>document.getElementById(id), fmt=n=>Math.floor(n).toLocaleString("ja-JP"), save=()=>localStorage.setItem("onionLegendV3",JSON.stringify(S));
+function toast(t){$("toast").textContent=t;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),1800)}
+function icon(n){if(n.includes("マッチョ"))return"💪🧅";if(n.includes("ハート"))return"💖🧅";if(n.includes("星"))return"⭐🧅";if(n.includes("炎")||n.includes("火")||n.includes("マグマ"))return"🔥🧅";if(n.includes("氷"))return"❄️🧅";if(n.includes("海")||n.includes("深海")||n.includes("魚")||n.includes("クラゲ"))return"🌊🧅";if(n.includes("古代")||n.includes("化石")||n.includes("恐竜"))return"🏺🧅";if(n.includes("雷")||n.includes("電気"))return"⚡🧅";if(n.includes("虹"))return"🌈🧅";if(n.includes("ダイヤ"))return"💎🧅";if(n.includes("宇宙")||n.includes("銀河")||n.includes("ブラックホール"))return"🌌🧅";return"🧅"}
+function base(o){let a=getDef(o.type,o.area);return a[2]*(o.mult||1)*(o.mutated?2.5:1)}
+function getDef(type,area){if(area==="normal")return normal[type];let i=type;return [areaNames[area][i],areaProb[i],areaEarn[i]]}
+function pick(){let pool=normal.map((x,i)=>({d:x,i,area:"normal"}));if(S.active!=="normal"){pool=areaNames[S.active].map((n,i)=>({d:[n,areaProb[i],areaEarn[i]],i,area:S.active}))}
+else if(phase===1){pool=pool.concat(night.map((x,i)=>({d:x,i,area:"night"})))} 
+let mult=S.fert&&S.fert.until>Date.now()?S.fert.mult:1;
+let rareBoost=1+(mult-1)*.35;
+let candidates=pool.map(x=>({...x,w:x.d[1]*(x.d[1]<.01?rareBoost:1)}));let sum=candidates.reduce((a,x)=>a+x.w,0),r=Math.random()*sum;
+for(const x of candidates){r-=x.w;if(r<=0)return x}return candidates[0]}
+function spawn(){if(field.length>=8)return;let x=pick();field.push({id:crypto.randomUUID(),type:x.i,area:x.area,mutated:Math.random()<(Date.now()<S.mutationUntil?1/8:1/32),born:Date.now(),x:8+Math.random()*78,y:15+Math.random()*68});renderFarm()}
+function harvest(id){let i=field.findIndex(o=>o.id===id);if(i<0)return;let o=field[i];let val=base(o);if(S.bag.length>=S.bagmax){toast("🎒 バッグがいっぱい！");return}S.money+=val;S.bag.push(o);S.stats.harvest++;field.splice(i,1);if(o.area!=="normal"&&o.type===0&&!S.unlocked[o.area]){S.unlocked[o.area]=true;modal("🗺️ "+getDef(0,o.area)[0]+"を発見！<br>新エリアが解放されました！")}save();renderAll()}
+function renderFarm(){let f=$("farmfield");f.className="farm"+(phase===1?" night":"");f.innerHTML="";field.forEach(o=>{let d=document.createElement("button");d.className="onion";d.style.left=o.x+"%";d.style.top=o.y+"%";d.innerHTML=icon(getDef(o.type,o.area)[0])+(o.mutated?"<small>🧬 突然変異！</small>":"");d.onclick=()=>harvest(o.id);f.appendChild(d)})}
+function renderInv(){let x=$("inventory");x.innerHTML="";$("bagcount").textContent=S.bag.length;$("bagmax").textContent=S.bagmax;S.bag.forEach((o,i)=>{let d=document.createElement("div");d.className="card";d.innerHTML=`<b>${icon(getDef(o.type,o.area)[0])} ${getDef(o.type,o.area)[0]}</b>${o.mutated?"<div>🧬 突然変異！</div>":""}<div class="price">¥${fmt(base(o))}/秒</div><button class="workbtn">💼仕事へ</button><button class="sellbtn">🗑️売る ¥${fmt(base(o)/2)}</button>`;d.querySelector(".sellbtn").onclick=()=>sell(i);d.querySelector(".workbtn").onclick=()=>moveWork(i);x.appendChild(d)})}
+function sell(i){let o=S.bag[i];S.money+=base(o)/2;S.bag.splice(i,1);save();renderAll();toast("🪙 売却した！")}
+function moveWork(i){if(S.work.length>=S.slots){toast("💼 仕事スロットがいっぱい！");return}S.work.push(S.bag.splice(i,1)[0]);save();renderAll()}
+S.work=[];
+function renderWork(){let x=$("works");x.innerHTML="";for(let i=0;i<10;i++){if(i<S.slots){let o=S.work[i];let d=document.createElement("div");d.className="card";d.innerHTML=o?`<b>💼 ${icon(getDef(o.type,o.area)[0])}${getDef(o.type,o.area)[0]}</b><div class="price">¥${fmt(base(o))}/秒</div><button>外す</button>`:`<b>空きスロット</b><div class="small">バッグから玉ねぎを移動</div>`;if(o)d.querySelector("button").onclick=()=>{S.bag.push(S.work.splice(i,1)[0]);save();renderAll()};x.appendChild(d)}else{let prices=[10000,1e6,1e8,1e10,1e12,1e15,1e16,1e18];let p=prices[i-2];let d=document.createElement("div");d.className="card";d.innerHTML=`🔒 ${i+1}枠<br><span class="price">¥${fmt(p)}</span><button>解放</button>`;d.querySelector("button").onclick=()=>{if(S.money>=p){S.money-=p;S.slots++;save();renderAll()}else toast("💰 お金が足りない！")};x.appendChild(d)}}}
+function synth(t,a){let ids=[];S.bag.forEach((o,i)=>{if(o.type===t&&o.area===a&&ids.length<4)ids.push(i)});if(ids.length<4)return;let mut=ids.some(i=>S.bag[i].mutated);ids.sort((a,b)=>b-a).forEach(i=>S.bag.splice(i,1));S.bag.push({type:t,area:a,mult:1.25,mutated:mut});S.stats.synth++;save();renderAll();toast("✨ 合成成功！")}
+function renderShop(){let s=$("sell"),sy=$("synth");s.innerHTML="";sy.innerHTML="";S.bag.forEach((o,i)=>{let d=document.createElement("div");d.className="shopitem";d.innerHTML=`${icon(getDef(o.type,o.area)[0])} ${getDef(o.type,o.area)[0]} <button>売る ¥${fmt(base(o)/2)}</button>`;d.querySelector("button").onclick=()=>sell(i);s.appendChild(d)});let groups={};S.bag.forEach(o=>{let k=o.area+":"+o.type;groups[k]=(groups[k]||0)+1});Object.entries(groups).forEach(([k,n])=>{if(n>=4){let [a,t]=k.split(":");let d=document.createElement("div");d.className="shopitem";d.innerHTML=`${icon(getDef(+t,a)[0])} ${getDef(+t,a)[0]} ×${n}<button>✨合成</button>`;d.querySelector("button").onclick=()=>synth(+t,a);sy.appendChild(d)}})}
+function renderMore(){let m=$("merchant"),tok=$("token"),ai=$("areainfo"),r=$("rebirth"),b=$("book");let merchantDay=S.day%3===0;if(merchantDay){let req=(S.day*7)%Math.min(30,normal.length);m.innerHTML=`🏪 商人出現中！<br>要求：${icon(normal[req][0])} ${normal[req][0]} ×1<br><button id="trade">${S.merchantClaimed?"交換済み":"🪙 交換する → トークン+2"}</button>`;if(!S.merchantClaimed)$("trade").onclick=()=>{let i=S.bag.findIndex(o=>o.type===req&&o.area==="normal");if(i<0){toast("要求された玉ねぎがない！");return}S.bag.splice(i,1);S.tokens+=2;S.merchantClaimed=true;save();renderAll();toast("🪙 トークン+2！")}}else m.innerHTML=`次の商人：${S.day+(3-S.day%3)}日目<br>現在のトークン：🪙 ${fmt(S.tokens)}`;
+tok.innerHTML=`🪙 ${fmt(S.tokens)}<br>`;ferts.forEach((f,i)=>{let d=document.createElement("button");d.textContent=`${f[0]} ${f[1]}🪙 / ${f[2]}秒 ×${f[3]}`;d.onclick=()=>buyFert(i);tok.appendChild(d)});let md=document.createElement("button");md.textContent="🧬 突然変異薬 30🪙 / 180秒";md.onclick=()=>{if(S.tokens>=30){S.tokens-=30;S.mutationUntil=Date.now()+180000;save();renderAll()}};tok.appendChild(md);
+ai.innerHTML=Object.entries(S.unlocked).map(([a,u])=>`${u?"🔓":"🔒"} ${a==="normal"?"普通の畑":a==="lava"?"🌋溶岩地帯":a==="ocean"?"🌊海洋地帯":"🏺古代地帯"}`).join("<br>");
+let req=[["¥1e8 + 🪙5000 + 黄金色玉ねぎ×3",1],["¥1e10 + 🪙50000 + ダイヤ玉ねぎ×3",2],["¥1e12 + 🪙500000 + 虹色玉ねぎ×5",3],["¥1e14 + 🪙5000000 + 王様玉ねぎ×5",4],["¥1e16 + 🪙50000000 + 黄金神玉ねぎ×5",5],["¥1e20 + 🪙500000000 + 時空玉ねぎ×10",6],["¥1e24 + 🪙5000000000 + マッチョ玉ねぎ×3",7]];r.innerHTML=`現在 ${S.rebirth}回<br>${S.rebirth<7?req[S.rebirth][0]:"最大転生到達！"}<br><button id="reb">♻️ 転生する</button>`;if(S.rebirth<7)$("reb").onclick=doRebirth;
+b.innerHTML=`収穫数：${fmt(S.stats.harvest)}　合成数：${fmt(S.stats.synth)}<br>通常40種・夜10種・各エリア25種を発見して図鑑を埋めよう！`;
+}
+function buyFert(i){let f=ferts[i];if(S.tokens<f[1])return toast("🪙 トークン不足！");S.tokens-=f[1];S.fert={name:f[0],until:Date.now()+f[2]*1000,mult:f[3]};save();renderAll()}
+function doRebirth(){let need=[1e8,1e10,1e12,1e14,1e16,1e20,1e24][S.rebirth],tn=[5000,50000,500000,5000000,50000000,500000000,5000000000][S.rebirth];if(S.money<need||S.tokens<tn)return toast("条件が足りません！");S.money=0;S.bag=[];S.work=[];S.tokens-=tn;S.rebirth++;S.bagmax=30;save();renderAll();toast("♻️ 転生成功！")}
+function modal(t){$("modaltext").innerHTML=t;$("modal").classList.remove("hidden")}
+$("close").onclick=()=>$("modal").classList.add("hidden");
+function renderAreas(){let x=$("areas");x.innerHTML="";let names={normal:"🌱普通の畑",lava:"🌋溶岩地帯",ocean:"🌊海洋地帯",ancient:"🏺古代地帯"};let costs={lava:100000,ocean:10000000,ancient:1000000000};Object.entries(names).forEach(([a,n])=>{let b=document.createElement("button");b.textContent=n+(S.unlocked[a]?"":" 🔒");b.className=S.active===a?"active":"";b.onclick=()=>{if(S.unlocked[a]){S.active=a;field=[];renderAll()}else if(a!=="normal"){let c=costs[a];if(S.money>=c){S.money-=c;S.unlocked[a]=true;S.active=a;field=[];save();renderAll();modal(n+" 解放！<br>新しい25種類の玉ねぎが出現します！")}else toast("💰 解放には ¥"+fmt(c)+" 必要！")} };x.appendChild(b)})}
+function renderAll(){$("money").textContent=fmt(S.money);renderAreas();renderFarm();renderInv();renderWork();renderShop();renderMore();$("fert").classList.toggle("hidden",!(S.fert&&S.fert.until>Date.now()));if(S.fert&&S.fert.until>Date.now())$("fert").textContent="🌱 "+S.fert.name+" 残り "+Math.ceil((S.fert.until-Date.now())/1000)+"秒";$("app").dataset.day=S.day}
+function gameStart(){ $("home").classList.add("hidden");$("app").classList.remove("hidden");lastSpawn=Date.now();renderAll()}
+$("start").onclick=()=>{localStorage.removeItem("onionLegendV3");S={money:0,bag:[],bagmax:30,slots:2,day:1,rebirth:0,tokens:0,unlocked:{normal:true,lava:false,ocean:false,ancient:false},active:"normal",fert:null,mutationUntil:0,merchantClaimed:false,stats:{harvest:0,synth:0},work:[]};gameStart();save()};
+$("cont").onclick=()=>{let z=localStorage.getItem("onionLegendV3");if(z)S=JSON.parse(z);S.work??=[];gameStart();toast("💾 セーブを読み込みました！")};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));$(b.dataset.p).classList.remove("hidden");renderAll()});
+$("bagup").onclick=()=>{let p=2500*Math.pow(3,Math.max(0,(S.bagmax-30)/10));if(S.bagmax>=100)return toast("🎒 最大100枠です！");if(S.money<p)return toast("💰 お金が足りない！");S.money-=p;S.bagmax=Math.min(100,S.bagmax+10);save();renderAll()};
+setInterval(()=>{let now=Date.now();if($("app").classList.contains("hidden"))return;if(now-lastSpawn>=3000){lastSpawn=now;spawn();spawn()}field=field.filter(o=>now-o.born<10000);let elapsed=(now-lastTick)/1000;S.money+=S.work.reduce((a,o)=>a+base(o),0)*elapsed;lastTick=now;let cycle=((now/1000)%360+0);let oldPhase=phase;phase=(cycle>=180&&cycle<360)?1:0;if(phase!==oldPhase)renderFarm();let oldDay=S.day;S.day=1+Math.floor((now/1000)/360);if(S.day!==oldDay){S.merchantClaimed=false;save()}if(S.fert&&S.fert.until<=now)S.fert=null;renderFarm();$("money").textContent=fmt(S.money);if(Math.random()<.05)save();},1000);
+</script>
+<style>
+/* ===== V4 Missing Features UI ===== */
+#v4fx{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden}
+.v4-star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.85;animation:v4twinkle 1.8s infinite alternate}
+@keyframes v4twinkle{from{opacity:.15;transform:scale(.7)}to{opacity:1;transform:scale(1.5)}}
+.v4-meteor{position:absolute;width:80px;height:2px;background:linear-gradient(90deg,transparent,#fff,transparent);transform:rotate(-25deg);animation:v4meteor 1.3s linear}
+@keyframes v4meteor{from{transform:translate(0,0) rotate(-25deg);opacity:0}15%{opacity:1}to{transform:translate(-260px,180px) rotate(-25deg);opacity:0}}
+.v4-firefly{position:absolute;width:6px;height:6px;border-radius:50%;background:#ffe66d;box-shadow:0 0 14px #ffe66d;animation:v4fly 3s ease-in-out infinite}
+@keyframes v4fly{50%{transform:translate(30px,-20px);opacity:.3}}
+#v4toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) scale(.9);padding:12px 18px;border-radius:18px;background:rgba(20,20,30,.9);color:white;font-weight:800;z-index:10001;opacity:0;transition:.25s;pointer-events:none}
+#v4toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+.v4-panel{background:rgba(255,255,255,.94);border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+.v4-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.v4-card{border:1px solid #ddd;border-radius:14px;padding:10px;background:#fff}
+.v4-locked{filter:grayscale(1);opacity:.55}
+.v4-secret{border:2px solid #9b59ff;background:linear-gradient(135deg,#fff,#f2e9ff)}
+.v4-area-lava{background:linear-gradient(135deg,#ffeadf,#ffd0c0)}
+.v4-area-ocean{background:linear-gradient(135deg,#e3f7ff,#ccecff)}
+.v4-area-ancient{background:linear-gradient(135deg,#fff5dc,#f2dfb0)}
+</style>
+<div id="v4fx"></div><div id="v4toast"></div>
+<script>
+(()=> {
+"use strict";
+const V4 = {
+  secrets:[
+    {n:"七星玉ねぎ",e:"🌟",v:777777},
+    {n:"黄昏玉ねぎ",e:"🌇",v:555555},
+    {n:"新月神玉ねぎ",e:"🌑",v:9999999},
+    {n:"商人秘蔵玉ねぎ",e:"🧳",v:3333333}
+  ],
+  night:[
+    {n:"月光玉ねぎ",e:"🌙",v:3500,p:.01},
+    {n:"星降り玉ねぎ",e:"🌠",v:6000,p:.007},
+    {n:"夜空玉ねぎ",e:"🌌",v:10000,p:.005},
+    {n:"深夜玉ねぎ",e:"🌃",v:18000,p:.0035},
+    {n:"流星玉ねぎ",e:"☄️",v:35000,p:.002},
+    {n:"幽玄玉ねぎ",e:"🫧",v:80000,p:.001},
+    {n:"新月玉ねぎ",e:"🌑",v:150000,p:.0005},
+    {n:"銀河玉ねぎ",e:"🌌",v:500000,p:.0002},
+    {n:"超新星玉ねぎ",e:"💥",v:2000000,p:.00005},
+    {n:"月夜の神玉ねぎ",e:"🌙",v:10000000,p:.00001}
+  ],
+  areas:{
+    lava:["溶岩玉ねぎ","火山玉ねぎ","灼熱玉ねぎ","火山岩玉ねぎ","マグマ玉ねぎ","炎獄玉ねぎ","隕石玉ねぎ","爆炎玉ねぎ","黒炎玉ねぎ","火口玉ねぎ","紅蓮玉ねぎ","煉獄岩玉ねぎ","業火玉ねぎ","大噴火玉ねぎ","灼熱神玉ねぎ","隕石王玉ねぎ","マグマ神玉ねぎ","炎龍玉ねぎ","黒曜玉ねぎ","地獄火玉ねぎ","超火山玉ねぎ","星落ち玉ねぎ","終焉炎玉ねぎ","火山王玉ねぎ","灼熱の神玉ねぎ"],
+    ocean:["海洋玉ねぎ","貝殻玉ねぎ","サンゴ玉ねぎ","魚玉ねぎ","熱帯魚玉ねぎ","泡玉ねぎ","タコ玉ねぎ","イカ玉ねぎ","クラゲ玉ねぎ","クジラ玉ねぎ","イルカ玉ねぎ","深海玉ねぎ","深淵玉ねぎ","海底宝石玉ねぎ","大海玉ねぎ","真珠玉ねぎ","海神玉ねぎ","海龍玉ねぎ","深海星玉ねぎ","超深海玉ねぎ","蒼海玉ねぎ","大洋王玉ねぎ","巨大深海玉ねぎ","海王玉ねぎ","海洋の神玉ねぎ"],
+    ancient:["古代玉ねぎ","石器玉ねぎ","化石玉ねぎ","土器玉ねぎ","石像玉ねぎ","砂漠玉ねぎ","サソリ玉ねぎ","遺跡玉ねぎ","古文書玉ねぎ","古代金貨玉ねぎ","巨石玉ねぎ","恐竜玉ねぎ","古代恐竜玉ねぎ","王墓玉ねぎ","古代王玉ねぎ","神殿玉ねぎ","神秘玉ねぎ","古代神玉ねぎ","太陽文明玉ねぎ","月文明玉ねぎ","失われた文明玉ねぎ","超古代玉ねぎ","古代皇帝玉ねぎ","古代文明王玉ねぎ","古代の神玉ねぎ"]
+  },
+  discovered: JSON.parse(localStorage.getItem("onionV4Discovered")||"{}"),
+  achievements: JSON.parse(localStorage.getItem("onionV4Achievements")||"{}"),
+  toast(t){let x=document.getElementById("v4toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)},
+  discover(n){if(!this.discovered[n]){this.discovered[n]=1;localStorage.setItem("onionV4Discovered",JSON.stringify(this.discovered));this.toast("📖 図鑑登録！ "+n)}},
+  saveAch(){localStorage.setItem("onionV4Achievements",JSON.stringify(this.achievements))},
+  ach(id,title,cond){
+    if(!this.achievements[id]&&cond()){this.achievements[id]=1;this.saveAch();this.toast("🏆 実績解除！ "+title)}
+  },
+  day(){
+    // Use the game's S.day when available; otherwise derive from elapsed time.
+    if(window.S && Number.isFinite(Number(S.day))) return Number(S.day);
+    return 1;
+  },
+  isNight(){
+    // Compatible with V3's phase convention.
+    if(window.S && typeof S.phase!=="undefined") return Number(S.phase)===1;
+    return false;
+  },
+  secretSpawn(){
+    const d=this.day(), night=this.isNight();
+    if(d%7===0 && Math.random()<.002) return this.secrets[0];
+    if(Math.random()<.001 && (night || Math.random()<.3)) return this.secrets[2];
+    if(Math.random()<.002 && !night) return this.secrets[1];
+    // Merchant flag compatibility.
+    if(window.S && S.merchant && Math.random()<.01) return this.secrets[3];
+    return null;
+  },
+  fxNight(){
+    const fx=document.getElementById("v4fx");
+    if(!this.isNight()){fx.innerHTML="";return}
+    if(fx.childElementCount>20)return;
+    for(let i=0;i<12;i++){
+      const s=document.createElement("i");s.className="v4-star";
+      s.style.left=Math.random()*100+"%";s.style.top=Math.random()*65+"%";s.style.animationDelay=Math.random()*2+"s";fx.appendChild(s)
+    }
+    for(let i=0;i<5;i++){
+      const f=document.createElement("i");f.className="v4-firefly";
+      f.style.left=Math.random()*100+"%";f.style.top=(35+Math.random()*50)+"%";f.style.animationDelay=Math.random()*3+"s";fx.appendChild(f)
+    }
+    if(Math.random()<.08){
+      const m=document.createElement("i");m.className="v4-meteor";m.style.left=(60+Math.random()*40)+"%";m.style.top=(5+Math.random()*35)+"%";fx.appendChild(m);setTimeout(()=>m.remove(),1400)
+    }
+  },
+  areaStyle(){
+    if(!window.S)return;
+    const a=String(S.area||S.currentArea||"");
+    document.body.classList.remove("v4-lava","v4-ocean","v4-ancient");
+    if(a.includes("lava")||a.includes("溶岩"))document.body.classList.add("v4-lava");
+    if(a.includes("ocean")||a.includes("海洋"))document.body.classList.add("v4-ocean");
+    if(a.includes("ancient")||a.includes("古代"))document.body.classList.add("v4-ancient");
+  },
+  book(){
+    const normal=(window.ONIONS||[]).length||40;
+    const all=[...(window.ONIONS||[])];
+    const n=this.night.map(x=>({name:x.n,icon:x.e,value:x.v}));
+    const s=this.secrets.map(x=>({name:x.n,icon:x.e,value:x.v}));
+    const areas=[...this.areas.lava,...this.areas.ocean,...this.areas.ancient].map(n=>({name:n,icon:"🧅",value:0}));
+    const list=[...all,...n,...s,...areas];
+    let el=document.getElementById("v4book");if(el)el.remove();
+    el=document.createElement("div");el.id="v4book";el.className="v4-panel";
+    el.innerHTML="<h3>📖 完全図鑑</h3><div class='v4-grid'></div>";
+    const grid=el.querySelector(".v4-grid");
+    list.forEach((o,i)=>{
+      const name=o.name||o.n||"未知の玉ねぎ", got=!!this.discovered[name];
+      const c=document.createElement("div");c.className="v4-card "+(!got?"v4-locked":"")+(s.some(x=>x.name===name)?" v4-secret":"");
+      c.innerHTML=got?`<b>${o.icon||"🧅"} ${name}</b><br><small>収益 ¥${Number(o.value||0).toLocaleString()}/s</small>`:`<b>❓ 未発見</b><br><small>No.${i+1}</small>`;
+      grid.appendChild(c)
+    });
+    return el;
+  },
+  achievementsUI(){
+    let el=document.getElementById("v4ach");if(el)el.remove();
+    el=document.createElement("div");el.id="v4ach";el.className="v4-panel";
+    const defs=[
+      ["first","はじめての収穫","1個以上収穫"],
+      ["ten","収穫職人","10個以上収穫"],
+      ["hundred","大農家","100個以上収穫"],
+      ["synth","合成デビュー","1回以上合成"],
+      ["night","夜の探索者","夜玉ねぎを発見"],
+      ["secret","秘密を発見","秘密玉ねぎを発見"],
+      ["area","異世界探検","エリア玉ねぎを発見"]
+    ];
+    let harvest=Number((window.S&&S.harvests)||localStorage.getItem("harvests")||0);
+    let synth=Number((window.S&&S.synths)||localStorage.getItem("synths")||0);
+    el.innerHTML="<h3>🏆 実績</h3>"+defs.map(d=>`<div class='v4-card'><b>${this.achievements[d[0]]?"✅":"⬜"} ${d[1]}</b><br><small>${d[2]}</small></div>`).join("");
+    return el;
+  },
+  rebirthRequirements(){
+    return [
+      {money:1e8,tokens:5000,item:"黄金色玉ねぎ",count:3,fields:2},
+      {money:1e10,tokens:50000,item:"ダイヤ玉ねぎ",count:3,fields:3},
+      {money:1e12,tokens:500000,item:"虹色玉ねぎ",count:5,fields:4},
+      {money:1e14,tokens:5000000,item:"王様玉ねぎ",count:5,fields:5},
+      {money:1e16,tokens:50000000,item:"黄金神玉ねぎ",count:5,fields:6},
+      {money:1e20,tokens:500000000,item:"時空玉ねぎ",count:10,fields:7},
+      {money:1e24,tokens:5000000000,item:"伝説のムキムキマッチョ玉ねぎ",count:3,fields:8}
+    ];
+  }
+};
+
+// Expose helpers for the existing game.
+window.ONION_V4=V4;
+
+// Patch harvest-like functions conservatively: intercept common function names if present.
+const oldSet=window.setInterval;
+setInterval(()=>V4.fxNight(),1200);
+setInterval(()=>V4.areaStyle(),1000);
+
+// Global click listener discovers onions when their name appears in a clicked element.
+document.addEventListener("click",e=>{
+  const txt=(e.target.innerText||"").trim();
+  if(!txt)return;
+  [...V4.secrets,...V4.night].forEach(o=>{if(txt.includes(o.n))V4.discover(o.n)});
+  Object.values(V4.areas).flat().forEach(n=>{if(txt.includes(n))V4.discover(n)});
+  const d=V4.day();
+  V4.ach("first","はじめての収穫",()=>/収穫/.test(txt));
+  V4.ach("night","夜の探索者",()=>V4.night.some(o=>V4.discovered[o.n]));
+  V4.ach("secret","秘密を発見",()=>V4.secrets.some(o=>V4.discovered[o.n]));
+  V4.ach("area","異世界探検",()=>Object.values(V4.areas).flat().some(n=>V4.discovered[n]));
+});
+
+// Secret discovery helper can be called by existing spawn code.
+window.trySecretOnion=()=>V4.secretSpawn();
+
+// Add a compact "V4 info" button without disturbing existing tabs.
+window.addEventListener("load",()=>{
+  const b=document.createElement("button");
+  b.textContent="✨ V4追加要素";
+  b.style.cssText="position:fixed;right:10px;top:10px;z-index:10000;border:0;border-radius:16px;padding:10px 12px;font-weight:900;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18)";
+  b.onclick=()=>{
+    const old=document.getElementById("v4modal");if(old)old.remove();
+    const m=document.createElement("div");m.id="v4modal";m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000;overflow:auto;padding:20px";
+    const box=document.createElement("div");box.style.cssText="max-width:760px;margin:40px auto;background:#f7f7fb;border-radius:24px;padding:18px";
+    box.innerHTML="<h2>🧅 玉ねぎ収穫伝説 V4</h2><p>追加要素：秘密玉ねぎ・夜演出・完全図鑑・実績・エリア演出・転生条件データ</p>";
+    const close=document.createElement("button");close.textContent="閉じる";close.onclick=()=>m.remove();
+    box.appendChild(V4.book());box.appendChild(V4.achievementsUI());box.appendChild(close);m.appendChild(box);document.body.appendChild(m)
+  };
+  document.body.appendChild(b);
+});
+})();
+</script>
+
+
+<style>
+/* ===== V5 TRUE INTEGRATION ===== */
+.v5-area-lava{background:radial-gradient(circle at 20% 20%,#ffb07c 0,#5a1717 45%,#160909 100%) !important}
+.v5-area-ocean{background:radial-gradient(circle at 50% 10%,#b9f2ff 0,#12618c 48%,#041b35 100%) !important}
+.v5-area-ancient{background:radial-gradient(circle at 50% 15%,#f7e0a0 0,#9b6b35 48%,#38220e 100%) !important}
+.v5-secret-pop{animation:v5secret .65s ease-out}
+@keyframes v5secret{0%{transform:scale(.3) rotate(-15deg);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+.v5-ach{position:fixed;top:62px;left:50%;transform:translateX(-50%);z-index:10002;background:#fff;padding:12px 18px;border-radius:18px;box-shadow:0 8px 28px #0004;font-weight:900;display:none}
+.v5-ach.show{display:block;animation:v5ach 2.5s both}
+@keyframes v5ach{0%{opacity:0;transform:translate(-50%,-20px)}12%,78%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-20px)}}
+</style>
+<div id="v5ach" class="v5-ach"></div>
+<script>
+(()=> {
+"use strict";
+const V=window.ONION_V4;
+if(!V)return;
+
+const AREA_DATA={
+ lava:{name:"🌋 溶岩地帯",class:"v5-area-lava",unlock:100000,
+  icons:["🌋","🔥","🪨","☄️"],names:V.areas.lava},
+ ocean:{name:"🌊 海洋地帯",class:"v5-area-ocean",unlock:10000000,
+  icons:["🌊","🐚","🐟","🪼"],names:V.areas.ocean},
+ ancient:{name:"🏺 古代地帯",class:"v5-area-ancient",unlock:1000000000,
+  icons:["🏺","🦴","🗿","☀️"],names:V.areas.ancient}
+};
+
+const SECRET=V.secrets;
+const secretRules={
+ "七星玉ねぎ":()=>V.day()%7===0 && Math.random()<.008,
+ "黄昏玉ねぎ":()=>{const p=(Date.now()/1000)%360;return (p>165&&p<195)&&Math.random()<.012},
+ "新月神玉ねぎ":()=>V.isNight() && Math.random()<.0008,
+ "商人秘蔵玉ねぎ":()=>!!(window.S&&S.merchant)&&Math.random()<.015
+};
+
+function state(){
+  window.S=window.S||{};
+  S.bag=S.bag||[];
+  S.money=Number(S.money||0);
+  S.tokens=Number(S.tokens||0);
+  S.fields=Number(S.fields||1);
+  S.rebirths=Number(S.rebirths||0);
+  S.harvests=Number(S.harvests||0);
+  S.synths=Number(S.synths||0);
+  S.area=S.area||"farm";
+  return S;
+}
+function toast(t){
+  const e=document.getElementById("v5ach");
+  e.textContent=t;e.classList.remove("show");void e.offsetWidth;e.classList.add("show");
+}
+function persist(){
+  try{localStorage.setItem("onionV5State",JSON.stringify(state()))}catch(e){}
+  try{if(typeof save==="function")save()}catch(e){}
+  try{if(typeof saveGame==="function")saveGame()}catch(e){}
+}
+function discover(o){
+  V.discover(o.n);
+}
+function makeOnion(o, area){
+  return {
+    name:o.n||o.name,
+    n:o.n||o.name,
+    value:Number(o.v||o.value||0),
+    earning:Number(o.v||o.value||0),
+    icon:o.e||"🧅",
+    emoji:o.e||"🧅",
+    mutation:false,
+    area:area||"farm",
+    secret:true
+  };
+}
+
+/* Real secret spawn: wrap the common spawn function if present. */
+for(const fn of ["spawnOnion","spawn","createOnion","spawnOnions"]){
+  if(typeof window[fn]==="function" && !window[fn].__v5){
+    const old=window[fn];
+    window[fn]=function(...args){
+      const r=old.apply(this,args);
+      try{
+        for(const o of SECRET){
+          if(secretRules[o.n]()){
+            const x=makeOnion(o);
+            if(Array.isArray(S.bag) && S.bag.length<Number(S.bagmax||100)){
+              // If the original function returns an array, append there.
+              if(Array.isArray(r)){r.push(x);return r}
+              S.bag.push(x); discover(o);
+              toast("✨ 秘密玉ねぎ出現！ "+o.e+" "+o.n);
+            }
+            break;
+          }
+        }
+      }catch(e){}
+      return r;
+    };
+    window[fn].__v5=true;
+  }
+}
+
+/* If the game has a harvest handler, ensure secret discoveries survive harvest. */
+document.addEventListener("click",()=>{
+  try{
+    const b=state().bag;
+    b.slice(-5).forEach(x=>{
+      const n=x?.name||x?.n;
+      const o=SECRET.find(s=>s.n===n);
+      if(o)discover(o);
+    });
+  }catch(e){}
+},true);
+
+/* Real area unlock + area switching. */
+window.enterV5Area=function(key){
+  const s=state(), a=AREA_DATA[key];
+  if(!a)return;
+  const unlocked=JSON.parse(localStorage.getItem("onionV5Areas")||"{}");
+  if(!unlocked[key]){
+    if(s.money<a.unlock){toast("🔒 "+a.name+"：¥"+a.unlock.toLocaleString()+"必要");return false}
+    s.money-=a.unlock;unlocked[key]=1;
+    localStorage.setItem("onionV5Areas",JSON.stringify(unlocked));
+    toast("🎉 "+a.name+" 解放！");
+  }
+  s.area=key;
+  document.body.classList.remove("v5-area-lava","v5-area-ocean","v5-area-ancient");
+  document.body.classList.add(a.class);
+  persist();
+  return true;
+};
+
+/* Area spawn: 25 entries, weighted by the requested probability series. */
+const probs=[.003,.002,.0015,.0012,.001,.0008,.0006,.0005,.0004,.0003,.00025,.0002,.00015,.0001,.00007,.00005,.00003,.00002,.000015,.00001,.000007,.000004,.000002,.000001,.0000003];
+const vals=[500,700,1000,1400,2000,3000,4500,6000,8000,10000,14000,20000,30000,45000,70000,100000,150000,250000,400000,600000,1000000,2000000,5000000,10000000,50000000];
+window.spawnV5AreaOnion=function(key){
+  const a=AREA_DATA[key]; if(!a)return null;
+  for(let i=0;i<a.names.length;i++){
+    if(Math.random()<probs[i]){
+      const x={n:a.names[i],name:a.names[i],e:a.icons[i%a.icons.length],icon:a.icons[i%a.icons.length],v:vals[i],earning:vals[i],area:key};
+      discover(x); return x;
+    }
+  }
+  return null;
+};
+
+/* Actual field count + rebirth requirements. */
+const req=V.rebirthRequirements();
+window.canV5Rebirth=function(){
+  const s=state(), r=req[s.rebirths];
+  if(!r)return false;
+  const count=s.bag.filter(x=>(x?.name||x?.n)===r.item).length;
+  return s.money>=r.money && s.tokens>=r.tokens && count>=r.count;
+};
+window.doV5Rebirth=function(){
+  const s=state(),r=req[s.rebirths];
+  if(!r){toast("🏆 最大8畑達成！");return false}
+  const count=s.bag.filter(x=>(x?.name||x?.n)===r.item).length;
+  if(s.money<r.money){toast("💰 お金が足りない");return false}
+  if(s.tokens<r.tokens){toast("🪙 トークンが足りない");return false}
+  if(count<r.count){toast("🧅 "+r.item+" ×"+r.count+" が必要");return false}
+  s.money=0;s.bag=[];s.work=[];s.rebirths++;
+  s.fields=Math.min(8,r.fields);
+  // Tokens are explicitly retained.
+  persist();
+  toast("♻️ 転生成功！ 畑 "+s.fields+"個！");
+  return true;
+};
+
+/* Full achievement checks based on actual counters/discoveries. */
+setInterval(()=>{
+  const s=state();
+  const count=Number(s.harvests||0), syn=Number(s.synths||0);
+  V.ach("first","はじめての収穫",()=>count>=1);
+  V.ach("ten","収穫職人",()=>count>=10);
+  V.ach("hundred","大農家",()=>count>=100);
+  V.ach("synth","合成デビュー",()=>syn>=1);
+  V.ach("night","夜の探索者",()=>V.night.some(o=>V.discovered[o.n]));
+  V.ach("secret","秘密を発見",()=>SECRET.some(o=>V.discovered[o.n]));
+  V.ach("area","異世界探検",()=>Object.values(V.areas).flat().some(n=>V.discovered[n]));
+},1500);
+
+/* Area-specific automatic spawn loop when an area is active. */
+setInterval(()=>{
+  const s=state();
+  if(AREA_DATA[s.area]){
+    const x=window.spawnV5AreaOnion(s.area);
+    if(x){
+      s.bag.push(x);
+      if(s.bag.length>Number(s.bagmax||100))s.bag.shift();
+      persist();
+    }
+  }
+},3000);
+
+/* Secret spawn loop every 3 seconds, independent of UI. */
+setInterval(()=>{
+  const s=state();
+  for(const o of SECRET){
+    if(secretRules[o.n]()){
+      const x=makeOnion(o);
+      if(s.bag.length<Number(s.bagmax||100)){
+        s.bag.push(x);discover(o);persist();
+        toast("✨ "+o.e+" "+o.n+" が出現！");
+      }
+      break;
+    }
+  }
+},3000);
+
+/* Keep visual area state synchronized. */
+setInterval(()=>{
+  const s=state();
+  document.body.classList.remove("v5-area-lava","v5-area-ocean","v5-area-ancient");
+  if(AREA_DATA[s.area])document.body.classList.add(AREA_DATA[s.area].class);
+},500);
+
+/* Make the V4 info modal show real rebirth status. */
+window.addEventListener("load",()=>{
+  const old=window.enterV5Area;
+  const add=document.createElement("div");
+  add.style.cssText="position:fixed;left:10px;top:10px;z-index:9999;display:flex;gap:5px";
+  [["🌋","lava"],["🌊","ocean"],["🏺","ancient"]].forEach(([icon,key])=>{
+    const b=document.createElement("button");
+    b.textContent=icon;b.title="エリアへ";
+    b.style.cssText="border:0;border-radius:14px;padding:9px;background:#fff;box-shadow:0 4px 14px #0002;font-size:20px";
+    b.onclick=()=>old(key);
+    add.appendChild(b);
+  });
+  document.body.appendChild(add);
+});
+})();
+</script>
+
+
+<style>
+/* ===== V6 POLISH / GAMEPLAY LAYER ===== */
+#v6-stage{position:fixed;inset:0;pointer-events:none;z-index:10003;overflow:hidden}
+.v6-flash{position:absolute;inset:0;background:white;animation:v6flash .45s both}
+@keyframes v6flash{0%{opacity:0}15%{opacity:.9}100%{opacity:0}}
+.v6-burst{position:absolute;left:50%;top:45%;font-size:58px;animation:v6burst 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes v6burst{0%{transform:translate(-50%,-50%) scale(.2) rotate(-15deg);opacity:0}25%{opacity:1}100%{transform:translate(-50%,-50%) scale(1.8) rotate(10deg);opacity:0}}
+.v6-particle{position:absolute;font-size:24px;animation:v6particle 1.1s ease-out both}
+@keyframes v6particle{to{transform:translate(var(--dx),var(--dy)) rotate(360deg);opacity:0}}
+.v6-achievement{position:fixed;left:50%;top:72px;transform:translateX(-50%);background:linear-gradient(135deg,#fff8bd,#fff);border:2px solid #f5c542;border-radius:20px;padding:12px 20px;box-shadow:0 10px 30px #0004;z-index:10004;font-weight:900;animation:v6ach 2.8s both}
+@keyframes v6ach{0%{opacity:0;transform:translate(-50%,-30px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-15px)}}
+.v6-boss{position:fixed;inset:0;z-index:10005;background:radial-gradient(circle,#7a003d,#160018 70%);display:flex;align-items:center;justify-content:center;animation:v6bossin .35s both}
+@keyframes v6bossin{from{opacity:0}to{opacity:1}}
+.v6-bossbox{text-align:center;color:white;padding:25px}
+.v6-boss-onion{font-size:130px;display:block;filter:drop-shadow(0 0 22px #ffd700);animation:v6bossfloat 1.1s ease-in-out infinite alternate}
+@keyframes v6bossfloat{to{transform:translateY(-14px) scale(1.06)}}
+.v6-boss h1{font-size:30px;margin:10px 0}
+.v6-boss button{border:0;border-radius:18px;padding:13px 22px;font-size:18px;font-weight:900}
+.v6-onion-visual{display:inline-flex;align-items:center;justify-content:center;width:76px;height:76px;border-radius:45% 45% 42% 42%;font-size:48px;box-shadow:inset 0 -8px 0 #0001,0 5px 15px #0002;transition:.2s}
+.v6-onion-visual:hover{transform:translateY(-4px) rotate(3deg)}
+body.v6-lava{background:radial-gradient(circle at 50% 10%,#ffcc99,#7d1b18 55%,#1d0808)!important}
+body.v6-ocean{background:radial-gradient(circle at 50% 10%,#d8fbff,#167ba6 55%,#06233d)!important}
+body.v6-ancient{background:radial-gradient(circle at 50% 10%,#fff1bd,#aa783d 55%,#3b2814)!important}
+</style>
+<div id="v6-stage"></div>
+
+<script>
+(()=> {
+"use strict";
+const V=window.ONION_V4;
+if(!V)return;
+const stage=document.getElementById("v6-stage");
+
+function s(){window.S=window.S||{};S.bag=S.bag||[];S.money=Number(S.money||0);S.tokens=Number(S.tokens||0);S.fields=Number(S.fields||1);S.rebirths=Number(S.rebirths||0);S.harvests=Number(S.harvests||0);S.synths=Number(S.synths||0);return S}
+function save(){try{localStorage.setItem("onionV6State",JSON.stringify(s()))}catch(e){} try{if(typeof window.save==="function")window.save()}catch(e){} try{if(typeof window.saveGame==="function")window.saveGame()}catch(e){}}
+function pop(text,emoji="✨"){
+  stage.innerHTML="";
+  const f=document.createElement("div");f.className="v6-flash";stage.appendChild(f);
+  const b=document.createElement("div");b.className="v6-burst";b.textContent=emoji;stage.appendChild(b);
+  for(let i=0;i<14;i++){
+    const p=document.createElement("div");p.className="v6-particle";p.textContent=["✨","🧅","⭐","💰","🔥"][i%5];
+    p.style.left="50%";p.style.top="45%";p.style.setProperty("--dx",(Math.random()*420-210)+"px");p.style.setProperty("--dy",(Math.random()*360-180)+"px");stage.appendChild(p);
+  }
+  const a=document.createElement("div");a.className="v6-achievement";a.textContent=text;document.body.appendChild(a);
+  setTimeout(()=>a.remove(),2900);setTimeout(()=>stage.innerHTML="",1200);
+}
+function showBoss(){
+  if(document.getElementById("v6boss"))return;
+  const b=document.createElement("div");b.id="v6boss";b.className="v6-boss";
+  b.innerHTML=`<div class="v6-bossbox"><span class="v6-boss-onion">💪🧅</span><h1>伝説のムキムキマッチョ玉ねぎ</h1><p>ついに伝説が現れた……！</p><button>挑戦する！</button></div>`;
+  b.querySelector("button").onclick=()=>{b.remove();pop("👑 伝説の玉ねぎを収穫！","💪")};
+  document.body.appendChild(b);
+}
+function visualize(obj){
+  if(!obj||!obj.name)return;
+  const n=obj.name;
+  const icons={
+    "普通の玉ねぎ":"🧅","小玉ねぎ":"🧅","大玉ねぎ":"🧅","白玉ねぎ":"⚪","しましま玉ねぎ":"🧅",
+    "紫玉ねぎ":"🟣","黄金色玉ねぎ":"🟡","ハート玉ねぎ":"💗","星形玉ねぎ":"⭐","ツノ玉ねぎ":"👿",
+    "透明玉ねぎ":"🔮","ダイヤ玉ねぎ":"💎","虹色玉ねぎ":"🌈","電気玉ねぎ":"⚡","炎玉ねぎ":"🔥",
+    "氷玉ねぎ":"❄️","毒玉ねぎ":"☠️","UFO玉ねぎ":"🛸","宇宙玉ねぎ":"🌌","王様玉ねぎ":"👑",
+    "黄金神玉ねぎ":"👑","時空玉ねぎ":"🌀","伝説のムキムキマッチョ玉ねぎ":"💪",
+    "月光玉ねぎ":"🌙","星降り玉ねぎ":"🌠","夜空玉ねぎ":"🌌","深夜玉ねぎ":"🌃",
+    "流星玉ねぎ":"☄️","幽玄玉ねぎ":"🫧","新月玉ねぎ":"🌑","銀河玉ねぎ":"🌌",
+    "超新星玉ねぎ":"💥","月夜の神玉ねぎ":"🌙","七星玉ねぎ":"🌟","黄昏玉ねぎ":"🌇",
+    "新月神玉ねぎ":"🌑","商人秘蔵玉ねぎ":"🧳"
+  };
+  return icons[n]||obj.icon||obj.emoji||"🧅";
+}
+window.getV6OnionIcon=visualize;
+
+/* Distinct visual helper for any card/list created by the existing UI. */
+function refreshVisuals(){
+  document.querySelectorAll("[data-onion-name]").forEach(el=>{
+    const n=el.getAttribute("data-onion-name");el.textContent=visualize({name:n});
+    el.classList.add("v6-onion-visual");
+  });
+}
+setInterval(refreshVisuals,800);
+
+/* Rare/secret/boss event watcher. */
+let lastBagLen=0,lastSeen="";
+setInterval(()=>{
+  const S0=s();
+  if(S0.bag.length>lastBagLen){
+    const newest=S0.bag[S0.bag.length-1];
+    const n=newest?.name||newest?.n||"";
+    if(n && n!==lastSeen){
+      lastSeen=n;
+      const rare=[...V.secrets,...V.night].some(x=>x.n===n);
+      const boss=n==="伝説のムキムキマッチョ玉ねぎ";
+      if(boss)showBoss();
+      else if(rare)pop("🌟 超レア玉ねぎ出現！ "+n,visualize(newest));
+      else if(Number(newest?.value||newest?.v||0)>=100000)pop("💎 激レア玉ねぎ！ "+n,"💎");
+    }
+  }
+  lastBagLen=S0.bag.length;
+},500);
+
+/* Achievement popups. */
+let oldAch=JSON.stringify(V.achievements);
+setInterval(()=>{
+  const now=JSON.stringify(V.achievements);
+  if(now!==oldAch){
+    oldAch=now;pop("🏆 実績解除！","🏆");
+  }
+},500);
+
+/* Area atmosphere. */
+setInterval(()=>{
+  const a=String(s().area||"");
+  document.body.classList.remove("v6-lava","v6-ocean","v6-ancient");
+  if(a.includes("lava")||a.includes("溶岩"))document.body.classList.add("v6-lava");
+  if(a.includes("ocean")||a.includes("海洋"))document.body.classList.add("v6-ocean");
+  if(a.includes("ancient")||a.includes("古代"))document.body.classList.add("v6-ancient");
+},500);
+
+/* Real 8-field rebirth UI button. */
+window.openV6Rebirth=()=>{
+  const old=document.getElementById("v6rebirth");if(old)old.remove();
+  const s0=s(),r=V.rebirthRequirements()[s0.rebirths];
+  const d=document.createElement("div");d.id="v6rebirth";
+  d.style.cssText="position:fixed;inset:0;background:#0009;z-index:10006;display:flex;align-items:center;justify-content:center;padding:18px";
+  const box=document.createElement("div");box.style.cssText="background:#fff;border-radius:24px;padding:20px;max-width:520px;width:100%;max-height:85vh;overflow:auto";
+  if(!r){
+    box.innerHTML="<h2>🏆 転生MAX！</h2><p>8畑すべて解放済み！</p>";
+  }else{
+    const cnt=s0.bag.filter(x=>(x?.name||x?.n)===r.item).length;
+    box.innerHTML=`<h2>♻️ 転生 ${s0.rebirths+1}</h2>
+      <p>転生後：🌱 <b>${r.fields}畑</b></p>
+      <p>💰 ¥${r.money.toLocaleString()}　${s0.money>=r.money?"✅":"❌"}</p>
+      <p>🪙 ${r.tokens.toLocaleString()}トークン　${s0.tokens>=r.tokens?"✅":"❌"}</p>
+      <p>🧅 ${r.item} ×${r.count}　現在 ${cnt}個 ${cnt>=r.count?"✅":"❌"}</p>`;
+    const go=document.createElement("button");go.textContent="♻️ 転生する";go.style.cssText="border:0;border-radius:16px;padding:12px 18px;font-weight:900";
+    go.onclick=()=>{if(window.doV5Rebirth&&window.doV5Rebirth()){d.remove();pop("🌱 畑が増えた！ "+r.fields+"畑","🌱")}};
+    box.appendChild(go);
+  }
+  const close=document.createElement("button");close.textContent="閉じる";close.style.cssText="margin-left:8px;border:0;border-radius:16px;padding:12px 18px";
+  close.onclick=()=>d.remove();box.appendChild(close);d.appendChild(box);document.body.appendChild(d);
+};
+
+/* Add a small rebirth button. */
+window.addEventListener("load",()=>{
+  const b=document.createElement("button");b.textContent="♻️";
+  b.title="転生";b.style.cssText="position:fixed;right:10px;bottom:72px;z-index:9999;border:0;border-radius:16px;padding:10px 13px;font-size:20px;background:#fff;box-shadow:0 5px 16px #0003";
+  b.onclick=window.openV6Rebirth;document.body.appendChild(b);
+});
+})();
+</script>
+
+</body></html>
